@@ -32,7 +32,7 @@ function selectDelivery(deliveryType, deliveryPrice) {
 }
 
 /**
- * Function for calculating total price and grand price
+ * Function for calculating total price and grand total
  */
 function totalSum() {
   // Getting the inner texts
