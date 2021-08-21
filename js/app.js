@@ -1,4 +1,10 @@
-// Function for feature selection
+/**
+ * Function for adding feature and update the total price
+ * @param {string} featureType name of the feature
+ * @param {string} featureSize size of the feature
+ * @param {number} featurePrice price of the feature
+ * @returns {function totalSum()} for updating the calculation
+ */
 function addFeature(featureType, featureSize, featurePrice) {
   document
     .getElementById("size-" + featureSize)
@@ -9,7 +15,12 @@ function addFeature(featureType, featureSize, featurePrice) {
     });
 }
 
-//Function for delivery selection
+/**
+ * Function for adding delivery option and update the total price
+ * @param {string} deliveryType type of delivery
+ * @param {number} deliveryPrice price of delivery
+ * @returns {function totalSum()} for updating the calculation
+ */
 function selectDelivery(deliveryType, deliveryPrice) {
   document
     .getElementById(deliveryType + "-delivery")
@@ -18,6 +29,35 @@ function selectDelivery(deliveryType, deliveryPrice) {
       deliveryCost.innerText = deliveryPrice;
       return totalSum();
     });
+}
+
+/**
+ * Function for calculating total price and grand price
+ */
+function totalSum() {
+  // Getting the inner texts
+  const totalCost = document.getElementById("total-cost");
+  const bestCost = document.getElementById("best-cost");
+  const bestCostParsed = parseFloat(bestCost.innerText);
+  const memoryCost = document.getElementById("memory-cost");
+
+  // Parsing the inner texts
+  const memoryCostParsed = parseFloat(memoryCost.innerText);
+  const storageCost = document.getElementById("storage-cost");
+  const storageCostParsed = parseFloat(storageCost.innerText);
+  const deliveryCost = document.getElementById("delivery-cost");
+  const deliveryCostParsed = parseFloat(deliveryCost.innerText);
+
+  // Getting the value of grand total
+  const grandTotal = document.getElementById("grand-total");
+
+  // Calculate the total price
+  const totalPriceValue =
+    bestCostParsed + memoryCostParsed + storageCostParsed + deliveryCostParsed;
+
+  // Update the total price and grand total
+  totalCost.innerText = totalPriceValue;
+  grandTotal.innerText = totalPriceValue;
 }
 
 //Adding extra memory
@@ -33,38 +73,16 @@ addFeature("storage", "1TB", 180);
 selectDelivery("prime", 0);
 selectDelivery("rapid", 20);
 
-//Function for calculating total
-function totalSum() {
-  const totalCost = document.getElementById("total-cost");
-  const bestCost = document.getElementById("best-cost");
-  const bestCostParsed = parseFloat(bestCost.innerText);
-  const memoryCost = document.getElementById("memory-cost");
-  const memoryCostParsed = parseFloat(memoryCost.innerText);
-  const storageCost = document.getElementById("storage-cost");
-  const storageCostParsed = parseFloat(storageCost.innerText);
-  const deliveryCost = document.getElementById("delivery-cost");
-  const deliveryCostParsed = parseFloat(deliveryCost.innerText);
-
-  const grandTotal = document.getElementById("grand-total");
-
-  const totalPriceValue =
-    bestCostParsed + memoryCostParsed + storageCostParsed + deliveryCostParsed;
-
-  totalCost.innerText = totalPriceValue;
-  grandTotal.innerText = totalPriceValue;
-}
-
-//Event for promo price
+// Event for promo button
 document.getElementById("promo-btn").addEventListener("click", function () {
-  const promoInput = document.getElementById("promo-input");
-  const promoCoupon = "stevekaku";
-  if (promoInput.value == promoCoupon) {
-    const totalPrice = document.getElementById("total-cost");
-    let totalPriceCost = totalPrice.innerText;
+  const promoField = document.getElementById("promo-input");
+  const totalPrice = document.getElementById("total-cost");
+  const grandTotal = document.getElementById("grand-total");
+  if (promoField.value == "stevekaku") {
+    const totalPriceCost = totalPrice.innerText;
     const promoValue = totalPriceCost * (20 / 100);
-    const grandTotal = document.getElementById("grand-total");
-    let grandTotalPromo = totalPriceCost - promoValue;
-    grandTotal.innerText = grandTotalPromo + " (after promo)";
+    const grandTotalPromo = totalPriceCost - promoValue;
+    grandTotal.innerText = grandTotalPromo;
   }
-  promoInput.value = "";
+  promoField.value = "";
 });
