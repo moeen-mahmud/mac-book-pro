@@ -1,66 +1,37 @@
-//Event for 8GB memory add
-const memory8GB = document
-  .getElementById("memory-8GB")
-  .addEventListener("click", function () {
-    const memoryCost = document.getElementById("memory-cost");
-    memoryCost.innerText = 0;
-    totalSum();
-  });
+// Function for feature selection
+function addFeature(featureType, featureSize, featurePrice) {
+  document
+    .getElementById("size-" + featureSize)
+    .addEventListener("click", function () {
+      const memoryCost = document.getElementById(featureType + "-cost");
+      memoryCost.innerText = featurePrice;
+      return totalSum();
+    });
+}
 
-//Event for 16GB memory add
-const memory16GB = document
-  .getElementById("memory-16GB")
-  .addEventListener("click", function () {
-    const memoryCost = document.getElementById("memory-cost");
-    memoryCost.innerText = 180;
-    totalSum();
-  });
+//Function for delivery selection
+function selectDelivery(deliveryType, deliveryPrice) {
+  document
+    .getElementById(deliveryType + "-delivery")
+    .addEventListener("click", function () {
+      const deliveryCost = document.getElementById("delivery-cost");
+      deliveryCost.innerText = deliveryPrice;
+      return totalSum();
+    });
+}
 
-//Event for 256GB Storage
+//Adding extra memory
+addFeature("memory", "8GB", 0);
+addFeature("memory", "16GB", 180);
 
-const storage256GB = document
-  .getElementById("storage-256GB")
-  .addEventListener("click", function () {
-    const storageCost = document.getElementById("storage-cost");
-    storageCost.innerText = 0;
-    totalSum();
-  });
+//Adding extra storage
+addFeature("storage", "256GB", 0);
+addFeature("storage", "512GB", 100);
+addFeature("storage", "1TB", 180);
 
-//Event for 512GB Storage
-const storage512GB = document
-  .getElementById("storage-512GB")
-  .addEventListener("click", function () {
-    const storageCost = document.getElementById("storage-cost");
-    storageCost.innerText = 100;
-    totalSum();
-  });
-
-//Event for 1TB Storage
-const storage1TB = document
-  .getElementById("storage-1TB")
-  .addEventListener("click", function () {
-    const storageCost = document.getElementById("storage-cost");
-    storageCost.innerText = 180;
-    totalSum();
-  });
-
-//Event for prime delivery
-const primeDelivery = document
-  .getElementById("prime-delivery")
-  .addEventListener("click", function () {
-    const deliveryCost = document.getElementById("delivery-cost");
-    deliveryCost.innerText = 0;
-    totalSum();
-  });
-
-//Event for rapid delivery
-const rapidDelivery = document
-  .getElementById("rapid-delivery")
-  .addEventListener("click", function () {
-    const deliveryCost = document.getElementById("delivery-cost");
-    deliveryCost.innerText = 20;
-    totalSum();
-  });
+//Adding delivary option
+selectDelivery("prime", 0);
+selectDelivery("rapid", 20);
 
 //Function for calculating total
 function totalSum() {
@@ -75,7 +46,7 @@ function totalSum() {
   const deliveryCostParsed = parseFloat(deliveryCost.innerText);
 
   const grandTotal = document.getElementById("grand-total");
-  
+
   const totalPriceValue =
     bestCostParsed + memoryCostParsed + storageCostParsed + deliveryCostParsed;
 
@@ -93,6 +64,7 @@ document.getElementById("promo-btn").addEventListener("click", function () {
     const promoValue = totalPriceCost * (20 / 100);
     const grandTotal = document.getElementById("grand-total");
     let grandTotalPromo = totalPriceCost - promoValue;
-    grandTotal.innerText = grandTotalPromo;
+    grandTotal.innerText = grandTotalPromo + " (after promo)";
   }
+  promoInput.value = "";
 });
